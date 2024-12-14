@@ -40,9 +40,6 @@ db.init_app(app)
 def init_db():
     """Initialise la base de données avec les tables nécessaires"""
     with app.app_context():
-        # Créer les tables si elles n'existent pas
-        db.create_all()
-        
         # Vérifier si l'admin existe déjà
         admin = User.query.filter_by(username='admin').first()
         if not admin:
@@ -66,8 +63,9 @@ def init_db():
             db.session.add(notebook)
             db.session.commit()
 
-# Initialiser la base de données au démarrage seulement si elle n'existe pas
-if not os.path.exists('blog.db'):
+# Initialiser la base de données au démarrage
+with app.app_context():
+    db.create_all()
     init_db()
 
 @login_manager.user_loader
