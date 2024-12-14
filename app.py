@@ -66,8 +66,9 @@ def init_db():
 
 # Initialiser la base de données au démarrage
 with app.app_context():
-    db.create_all()
-    init_db()
+    db.drop_all()  # Supprimer toutes les tables existantes
+    db.create_all()  # Recréer toutes les tables
+    init_db()       # Initialiser avec l'utilisateur admin
 
 @login_manager.user_loader
 def load_user(user_id):
