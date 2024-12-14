@@ -10,6 +10,8 @@ import os
 import markdown
 from markupsafe import Markup
 
+# Configuration de l'application Flask
+# Mise à jour : 14/12/2023 - Migration vers PostgreSQL
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'dev-key-12345')
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///./blog.db')
