@@ -1,0 +1,150 @@
+/* Reset et variables */
+:root {
+    --text-color: #000;
+    --bg-color: #fff;
+    --accent-color: #333;
+    --max-width: 800px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Style de base */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background: var(--bg-color);
+    padding: 2rem 1rem;
+}
+
+/* Layout */
+header, main, footer {
+    max-width: var(--max-width);
+    margin: 0 auto;
+}
+
+/* En-tête */
+header {
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.site-title {
+    font-size: 2rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.baseline {
+    margin-top: 0.5rem;
+    color: var(--accent-color);
+}
+
+/* Navigation */
+nav {
+    margin: 1rem 0;
+}
+
+nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    margin: 0 1rem;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* Articles */
+.post {
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #eee;
+}
+
+.post-title {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.post-meta {
+    color: var(--accent-color);
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.post-content {
+    margin-bottom: 1rem;
+}
+
+/* Tags */
+.tags {
+    margin-top: 1rem;
+}
+
+.tag {
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    margin: 0.2rem;
+    background: #f0f0f0;
+    border-radius: 3px;
+    text-decoration: none;
+    color: var(--accent-color);
+    font-size: 0.9rem;
+}
+
+/* Admin */
+.admin-controls {
+    margin: 2rem 0;
+    padding: 1rem;
+    background: #f8f8f8;
+    border-radius: 4px;
+}
+
+/* Formulaires */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+}
+
+button {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+/* Messages flash */
+.flash-message {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: #f8f8f8;
+    border-left: 4px solid var(--accent-color);
+}
+
+/* Footer */
+footer {
+    margin-top: 3rem;
+    padding-top: 1rem;
+    border-top: 1px solid #eee;
+    text-align: center;
+    color: var(--accent-color);
+    font-size: 0.9rem;
+}

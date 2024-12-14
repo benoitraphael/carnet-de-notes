@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% block title %}{{ 'Modifier' if post else 'Nouvelle' }} note{% endblock %}
+
+{% block content %}
+    <div class="post-form">
+        <h1>{{ 'Modifier' if post else 'Nouvelle' }} note</h1>
+        <form method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+            <div class="form-group">
+                <label for="title">Titre</label>
+                <input type="text" id="title" name="title" value="{{ post.title if post else '' }}" required>
+            </div>
+            <div class="form-group">
+                <label for="content">Contenu (Markdown)</label>
+                <textarea id="content" name="content" rows="20" required>{{ post.content if post else '' }}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="tags">Tags (séparés par des virgules)</label>
+                <input type="text" id="tags" name="tags" value="{{ post.tags|map(attribute='name')|join(', ') if post else '' }}" placeholder="technologie, idées, projets">
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="primary">{{ 'Mettre à jour' if post else 'Créer' }} la note</button>
+                <a href="{{ url_for('index') }}" class="button secondary">Annuler</a>
+            </div>
+        </form>
+    </div>
+
+    {% if not post %}
+    <div class="markdown-help">
+        <h2>Aide Markdown</h2>
+        <ul>
+            <li><code># Titre</code> pour un titre principal</li>
+            <li><code>## Sous-titre</code> pour un sous-titre</li>
+            <li><code>**texte**</code> pour du texte en gras</li>
+            <li><code>*texte*</code> pour du texte en italique</li>
+            <li><code>[texte](url)</code> pour un lien</li>
+            <li><code>- item</code> pour une liste à puces</li>
+            <li><code>1. item</code> pour une liste numérotée</li>
+            <li><code>```code```</code> pour du code</li>
+            <li><code>> citation</code> pour une citation</li>
+        </ul>
+    </div>
+    {% endif %}
+
+    <style>
+        :root {
+            --color-text: #2c3e50;
+            --color-background: #faf8f5;
+            --color-input: #ffffff;
+            --color-accent: #8b7355;
+            --color-accent-light: #a69076;
+            --font-serif: Georgia, 'Times New Roman', serif;
+            --font-sans: -apple-system, system-ui, sans-serif;
+            --spacing: 2rem;
+        }
+
+        body {
+            background: var(--color-background);
+        }
+
+        .post-form {
+            max-width: 800px;
+            margin: var(--spacing) auto;
+            padding: var(--spacing);
+        }
+
+        .post-form h1 {
+            color: var(--color-text);
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-weight: normal;
+            margin-bottom: var(--spacing);
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing);
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--color-text);
+            font-family: var(--font-serif);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 2px;
+            background: var(--color-input);
+            color: var(--color-text);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--color-accent);
+        }
+
+        .form-group input::placeholder {
+            color: #999;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 300px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: var(--spacing);
+        }
+
+        .form-actions button,
+        .form-actions .button {
+            padding: 0.75rem 2rem;
+            font-family: var(--font-serif);
+            font-size: 1rem;
+            text-decoration: none;
+            border-radius: 2px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .form-actions button.primary {
+            background: var(--color-accent);
+            color: white;
+            border: none;
+        }
+
+        .form-actions button.primary:hover {
+            background: var(--color-accent-light);
+        }
+
+        .form-actions .button.secondary {
+            background: transparent;
+            color: var(--color-accent);
+            border: 1px solid var(--color-accent);
+        }
+
+        .form-actions .button.secondary:hover {
+            background: rgba(139, 115, 85, 0.1);
+        }
+
+        .markdown-help {
+            max-width: 800px;
+            margin: var(--spacing) auto;
+            padding: var(--spacing);
+        }
+
+        .markdown-help h2 {
+            color: var(--color-text);
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: normal;
+            margin-bottom: 1rem;
+        }
+
+        .markdown-help ul {
+            list-style: none;
+            padding: 0;
+            columns: 2;
+            column-gap: 2rem;
+        }
+
+        .markdown-help li {
+            margin-bottom: 0.75rem;
+            break-inside: avoid;
+            color: var(--color-text);
+            font-family: var(--font-sans);
+        }
+
+        .markdown-help code {
+            background: var(--color-input);
+            padding: 0.2rem 0.4rem;
+            border-radius: 2px;
+            font-family: ui-monospace, monospace;
+            font-size: 0.9rem;
+            color: var(--color-accent);
+        }
+
+        @media (max-width: 640px) {
+            .post-form,
+            .markdown-help {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .markdown-help ul {
+                columns: 1;
+            }
+        }
+    </style>
+{% endblock %}

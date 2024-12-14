@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Liste des utilisateurs</h1>
+    <table class="users-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom d'utilisateur</th>
+                <th>Email</th>
+                <th>Date de création</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .users-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 2rem;
+        background: var(--color-lighter);
+        box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        border-radius: 8px;
+        overflow: hidden;
+    }
+
+    .users-table th,
+    .users-table td {
+        padding: 1rem;
+        text-align: left;
+        border-bottom: 1px solid var(--color-light);
+    }
+
+    .users-table th {
+        background: var(--color-accent);
+        color: white;
+        font-weight: 600;
+    }
+
+    .users-table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .users-table tr:hover {
+        background: rgba(0,0,0,0.02);
+    }
+</style>
+{% endblock %}

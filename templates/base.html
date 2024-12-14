@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    {% block head %}{% endblock %}
+    <style>
+        :root {
+            --color-paper: #f5f3e9;
+            --color-ink: #2c2c2c;
+            --color-accent: #8b6b4d;
+            --color-light: #e8e4d5;
+            --color-lighter: #faf9f5;
+            --color-title: #333333;
+            --font-serif: 'Playfair Display', serif;
+            --font-text: 'Lora', serif;
+            --spacing: 2rem;
+        }
+
+        body {
+            font-family: var(--font-text);
+            font-weight: 400;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: var(--spacing);
+            color: var(--color-ink);
+            background-color: var(--color-paper);
+        }
+
+        .messages {
+            list-style: none;
+            padding: 0;
+            margin: 2rem 0;
+        }
+
+        .message {
+            padding: 1rem;
+            margin-bottom: 1rem;
+            font-family: var(--font-text);
+            text-align: center;
+            border-bottom: 1px solid var(--color-light);
+        }
+
+        .message.error {
+            color: var(--color-accent);
+        }
+
+        .message.success {
+            color: var(--color-ink);
+        }
+
+        /* Style pour les citations */
+        p:has(> blockquote),
+        blockquote {
+            position: relative;
+            font-family: var(--font-serif);
+            font-style: italic;
+            padding-left: 2rem;
+            margin: 2rem 0;
+            color: var(--color-accent);
+            line-height: 1.6;
+        }
+
+        p:has(> blockquote)::before,
+        blockquote::before {
+            content: """;
+            position: absolute;
+            left: 0;
+            top: -0.5rem;
+            font-size: 3rem;
+            font-family: var(--font-serif);
+            color: var(--color-accent);
+            opacity: 0.5;
+        }
+
+        /* Style pour les lignes commençant par < */
+        .note-card .excerpt p:has(> blockquote),
+        .note-full p:has(> blockquote) {
+            position: relative;
+            font-family: var(--font-serif);
+            font-style: italic;
+            padding-left: 2rem;
+            margin: 2rem 0;
+            color: var(--color-accent);
+            line-height: 1.6;
+        }
+
+        .note-card .excerpt p:has(> blockquote)::before,
+        .note-full p:has(> blockquote)::before {
+            content: """;
+            position: absolute;
+            left: 0;
+            top: -0.5rem;
+            font-size: 3rem;
+            font-family: var(--font-serif);
+            color: var(--color-accent);
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="messages">
+                {% for category, message in messages %}
+                    <li class="message {{ category }}">{{ message | safe }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+</body>
+</html>

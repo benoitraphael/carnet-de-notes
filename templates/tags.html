@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Tags{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header class="site-header">
+        <h1>Tags</h1>
+    </header>
+
+    <nav class="main-nav">
+        <a href="{{ url_for('index') }}" class="nav-link">
+            <i class="fas fa-book"></i>
+            Accueil
+        </a>
+        <a href="{{ url_for('tags') }}" class="nav-link">
+            <i class="fas fa-tag"></i>
+            Tags
+        </a>
+        {% if current_user.is_admin %}
+        <a href="{{ url_for('admin_users') }}" class="nav-link">
+            <i class="fas fa-users"></i>
+            Administration
+        </a>
+        {% endif %}
+        <a href="{{ url_for('logout') }}" class="nav-link">
+            <i class="fas fa-sign-out-alt"></i>
+            Déconnexion
+        </a>
+    </nav>
+
+    <div class="content">
+        {% if tags %}
+            <div class="tags-cloud">
+                {% for tag in tags %}
+                    <a href="{{ url_for('tag', tag_name=tag.name) }}" class="tag-item">
+                        <span class="tag-name">#{{ tag.name }}</span>
+                        <span class="tag-count">{{ tag_counts[tag.name] }}</span>
+                    </a>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="empty-state">Aucun tag n'a encore été créé.</p>
+        {% endif %}
+    </div>
+</div>
+
+<style>
+    .container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .site-header {
+        margin-bottom: 2rem;
+        text-align: center;
+    }
+
+    .site-header h1 {
+        font-family: var(--font-serif);
+        font-size: 3rem;
+        color: var(--color-ink);
+        font-weight: 400;
+        margin: 0;
+    }
+
+    .tags-cloud {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+        padding: 2rem;
+    }
+
+    .tag-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        background: var(--color-lighter);
+        border: 1px solid var(--color-accent);
+        border-radius: 2rem;
+        color: var(--color-accent);
+        text-decoration: none;
+        font-size: 1rem;
+        transition: all 0.2s ease;
+    }
+
+    .tag-item:hover {
+        background: var(--color-accent);
+        color: var(--color-lighter);
+        transform: translateY(-2px);
+    }
+
+    .tag-name {
+        font-family: var(--font-serif);
+        font-style: italic;
+    }
+
+    .tag-count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 1.5rem;
+        height: 1.5rem;
+        padding: 0 0.5rem;
+        background: var(--color-accent);
+        color: var(--color-lighter);
+        border-radius: 1rem;
+        font-size: 0.8rem;
+        font-family: var(--font-text);
+    }
+
+    .tag-item:hover .tag-count {
+        background: var(--color-lighter);
+        color: var(--color-accent);
+    }
+
+    .empty-state {
+        text-align: center;
+        color: var(--color-accent);
+        font-style: italic;
+        margin: 3rem 0;
+    }
+</style>
+{% endblock %}

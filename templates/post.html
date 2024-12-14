@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<div class="note-container">
+    <a href="{{ url_for('index') }}" class="back-link">
+        <i class="fas fa-book"></i>
+        Retour au carnet
+    </a>
+    
+    <article class="note-full">
+        <header>
+            <h1>{{ post.title }}</h1>
+            <time datetime="{{ post.created_at.strftime('%Y-%m-%d') }}">{{ post.created_at.strftime('%d/%m/%Y') }}</time>
+            {% if post.updated_at and post.updated_at != post.created_at %}
+                <span class="updated">(Modifié le {{ post.updated_at.strftime('%d/%m/%Y') }})</span>
+            {% endif %}
+        </header>
+
+        <div class="note-content">
+            {{ post.content|markdown }}
+        </div>
+
+        <footer>
+            <div class="tags">
+                {% for tag in post.tags %}
+                    <a href="{{ url_for('tag', tag_name=tag.name) }}" class="tag">#{{ tag.name }}</a>
+                {% endfor %}
+            </div>
+            
+            <div class="actions">
+                <a href="{{ url_for('edit_note', note_id=post.id) }}" class="action-link">
+                    <i class="fas fa-feather"></i>
+                    Modifier
+                </a>
+                <form action="{{ url_for('delete_note', note_id=post.id) }}" method="POST" class="inline-form">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <button type="submit" class="action-link">
+                        <i class="fas fa-trash"></i>
+                        Supprimer
+                    </button>
+                </form>
+            </div>
+        </footer>
+    </article>
+</div>
+
+<style>
+    .note-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        position: relative;
+    }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--color-accent);
+        text-decoration: none;
+        font-size: 0.9rem;
+        margin-bottom: 2rem;
+        transition: color 0.2s;
+    }
+
+    .back-link:hover {
+        color: var(--color-ink);
+    }
+
+    .note-full {
+        background: var(--color-lighter);
+        border-radius: 8px;
+        padding: 2rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .note-full header {
+        margin-bottom: 2rem;
+    }
+
+    .note-full h1 {
+        font-family: var(--font-serif);
+        font-size: 2.5rem;
+        color: var(--color-ink);
+        margin: 0 0 0.5rem;
+    }
+
+    .note-full time, .updated {
+        color: var(--color-accent);
+        font-style: italic;
+    }
+
+    .note-content {
+        font-family: var(--font-sans);
+        line-height: 1.8;
+        color: var(--color-ink);
+        margin: 2rem 0;
+    }
+
+    .note-content h2 {
+        font-family: var(--font-serif);
+        color: var(--color-ink);
+        margin: 2rem 0 1rem;
+    }
+
+    .note-content p {
+        margin: 1rem 0;
+    }
+
+    .note-content a {
+        color: var(--color-accent);
+        text-decoration: underline;
+    }
+
+    footer {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid var(--color-accent);
+    }
+
+    .tags {
+        margin-bottom: 1rem;
+    }
+
+    .tag {
+        display: inline-block;
+        padding: 0.25rem 0.5rem;
+        margin: 0 0.5rem 0.5rem 0;
+        background: var(--color-accent);
+        color: var(--color-lighter);
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: opacity 0.2s;
+    }
+
+    .tag:hover {
+        opacity: 0.9;
+    }
+
+    .actions {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+        margin-top: 1.5rem;
+    }
+
+    .action-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: var(--color-accent);
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.2s;
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    .action-link:hover {
+        color: var(--color-ink);
+    }
+
+    .inline-form {
+        display: inline;
+    }
+</style>
+{% endblock %}

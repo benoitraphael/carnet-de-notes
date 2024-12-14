@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Nouveau carnet{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h1>{% if notebook %}Modifier le carnet{% else %}Nouveau carnet{% endif %}</h1>
+    <form method="post">
+        {{ form.csrf_token }}
+        <div class="form-group">
+            {{ form.title.label }}
+            {{ form.title(class="form-control") }}
+            {% if form.title.errors %}
+                {% for error in form.title.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.baseline.label }}
+            {{ form.baseline(class="form-control") }}
+            {% if form.baseline.errors %}
+                {% for error in form.baseline.errors %}
+                    <span class="error">{{ error }}</span>
+                {% endfor %}
+            {% endif %}
+        </div>
+        <button type="submit">{% if notebook %}Mettre à jour{% else %}Créer{% endif %}</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,66 @@
+<div class="landing">
+    <h1 class="elegant-title">Carnets de Notes</h1>
+    <p class="subtitle">Un espace pour partager vos pensées</p>
+    <nav class="auth-nav">
+        <a href="{{ url_for('login') }}" class="button">Connexion</a>
+        <a href="{{ url_for('register') }}" class="button secondary">Inscription</a>
+    </nav>
+</div>
+
+<style>
+    .landing {
+        text-align: center;
+        padding: var(--spacing);
+        margin-top: 15vh;
+    }
+
+    .elegant-title {
+        font-family: var(--font-serif);
+        font-size: 3.5rem;
+        font-weight: 300;
+        margin: 0;
+        color: var(--color-text);
+        letter-spacing: 0.02em;
+    }
+
+    .subtitle {
+        font-family: var(--font-serif);
+        font-style: italic;
+        font-weight: 300;
+        font-size: 1.2rem;
+        margin: 1rem 0 3rem;
+        color: var(--color-accent);
+    }
+
+    .auth-nav {
+        display: flex;
+        gap: 1.5rem;
+        justify-content: center;
+    }
+
+    .button {
+        font-family: var(--font-text);
+        font-size: 1rem;
+        font-weight: 400;
+        text-decoration: none;
+        color: var(--color-accent);
+        padding: 0.5rem 1.5rem;
+        border: 1px solid var(--color-accent);
+        border-radius: 3px;
+        transition: all 0.2s ease;
+    }
+
+    .button:hover {
+        background-color: var(--color-accent);
+        color: var(--color-paper);
+    }
+
+    .button.secondary {
+        background-color: transparent;
+    }
+
+    .button.secondary:hover {
+        background-color: var(--color-light);
+        color: var(--color-accent);
+    }
+</style>

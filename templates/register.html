@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block content %}
+<div class="auth-form">
+    <h1>Inscription</h1>
+    <form method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+        <div class="form-group">
+            <label for="username">Nom d'utilisateur</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit">S'inscrire</button>
+    </form>
+    <p class="auth-link">Déjà inscrit ? <a href="{{ url_for('login') }}">Connectez-vous</a></p>
+</div>
+
+<style>
+    .auth-form {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 2rem;
+        background: var(--color-lighter);
+        border-radius: 8px;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+    }
+
+    .auth-form h1 {
+        margin: 0 0 2rem;
+        text-align: center;
+        color: var(--color-title);
+        font-family: 'Playfair Display', serif;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--color-title);
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 0.8rem;
+        border: 1px solid var(--color-light);
+        border-radius: 4px;
+        font-family: inherit;
+        font-size: 1rem;
+    }
+
+    .form-group input:focus {
+        outline: none;
+        border-color: var(--color-accent);
+    }
+
+    button {
+        width: 100%;
+        padding: 1rem;
+        background: var(--color-accent);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    button:hover {
+        background: var(--color-ink);
+    }
+
+    .auth-link {
+        text-align: center;
+        margin-top: 1.5rem;
+    }
+
+    .auth-link a {
+        color: var(--color-accent);
+        text-decoration: none;
+    }
+
+    .auth-link a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}

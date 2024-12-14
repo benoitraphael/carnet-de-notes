@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% block title %}
+{% if current_user.is_authenticated %}
+    Carnet
+{% else %}
+    Carnets de Notes
+{% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if current_user.is_authenticated %}
+        {% include 'authenticated.html' %}
+    {% else %}
+        {% include 'landing.html' %}
+    {% endif %}
+{% endblock %}
+
+<style>
+    :root {
+        --color-text: #2c3e50;
+        --color-background: #faf8f5;
+        --color-surface: #ffffff;
+        --color-accent: #8b7355;
+        --color-accent-light: #a69076;
+        --font-serif: Georgia, 'Times New Roman', serif;
+        --font-sans: -apple-system, system-ui, sans-serif;
+        --spacing: 2rem;
+    }
+
+    body {
+        background: var(--color-background);
+        color: var(--color-text);
+        font-family: var(--font-sans);
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Authenticated user styles */
+    .site-header {
+        padding: var(--spacing) 0;
+    }
+
+    .author {
+        font-family: var(--font-serif);
+        font-style: italic;
+        color: var(--color-text);
+        margin: 0.5rem 0;
+    }
+
+    .main-nav {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        padding: 1rem 0;
+        border-bottom: 1px solid #e0e0e0;
+        margin-bottom: var(--spacing);
+    }
+
+    .nav-item {
+        color: var(--color-accent);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--font-serif);
+    }
+
+    .nav-item:hover {
+        color: var(--color-accent-light);
+    }
+
+    .content {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 var(--spacing);
+    }
+
+    .actions {
+        margin-bottom: var(--spacing);
+        text-align: right;
+    }
+
+    .button {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background: var(--color-accent);
+        color: white;
+        text-decoration: none;
+        border-radius: 4px;
+        font-family: var(--font-serif);
+    }
+
+    .button.secondary {
+        background: transparent;
+        color: var(--color-accent);
+        border: 1px solid var(--color-accent);
+    }
+
+    .button:hover {
+        background: var(--color-accent-light);
+    }
+
+    .button.secondary:hover {
+        background: var(--color-accent);
+        color: white;
+    }
+
+    .notes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: var(--spacing);
+    }
+
+    .note-card {
+        background: var(--color-surface);
+        padding: var(--spacing);
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .note-card h2 {
+        font-family: var(--font-serif);
+        font-size: 1.5rem;
+        margin: 0 0 1rem 0;
+    }
+
+    .note-card h2 a {
+        color: var(--color-text);
+        text-decoration: none;
+    }
+
+    .note-card h2 a:hover {
+        color: var(--color-accent);
+    }
+
+    .date {
+        color: #666;
+        font-family: var(--font-serif);
+        font-style: italic;
+        margin: 0.5rem 0;
+    }
+
+    .excerpt {
+        margin: 1rem 0;
+        color: var(--color-text);
+    }
+
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .tag {
+        background: var(--color-background);
+        color: var(--color-accent);
+        padding: 0.2rem 0.6rem;
+        border-radius: 2rem;
+        font-size: 0.9rem;
+        text-decoration: none;
+    }
+
+    .tag:hover {
+        background: var(--color-accent);
+        color: white;
+    }
+
+    @media (max-width: 768px) {
+        .notes-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .main-nav {
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+    }
+</style>

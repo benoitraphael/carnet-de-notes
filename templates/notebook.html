@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}{{ notebook.title }}{% endblock %}
+
+{% block content %}
+<div class="notebook-header">
+    <h1>{{ notebook.title }}</h1>
+    {% if notebook.baseline %}
+        <p class="notebook-baseline">{{ notebook.baseline }}</p>
+    {% endif %}
+    {% if current_user == notebook.owner %}
+        <div class="notebook-actions">
+            <a href="{{ url_for('new_post', slug=notebook.slug) }}" class="button">Nouvel article</a>
+        </div>
+    {% endif %}
+</div>
+
+<div class="posts">
+    {% for post in posts %}
+        <article class="post">
+            <h2 class="post-title">
+                <a href="{{ url_for('view_post', slug=notebook.slug, post_id=post.id) }}">{{ post.title }}</a>
+            </h2>
+            <div class="post-meta">
+                Publié le {{ post.created_at.strftime('%d/%m/%Y') }}
+            </div>
+            <div class="post-content">
+                {{ post.content|md|safe|truncate(300) }}
+            </div>
+            <div class="tags">
+                {% for tag in post.tags %}
+                    <a href="{{ url_for('notebook_tag', slug=notebook.slug, tag_name=tag.name) }}" class="tag">#{{ tag.name }}</a>
+                {% endfor %}
+            </div>
+        </article>
+    {% else %}
+        <p>Aucun article dans ce carnet pour le moment.</p>
+    {% endfor %}
+</div>
+{% endblock %}
