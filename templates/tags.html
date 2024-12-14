@@ -5,7 +5,7 @@
 {% block content %}
 <div class="container">
     <header class="site-header">
-        <h1>Tags</h1>
+        <h1 class="elegant-title">Tags</h1>
     </header>
 
     <nav class="main-nav">
@@ -31,21 +31,30 @@
 
     <div class="content">
         {% if tags %}
-            <div class="tags-cloud">
+            <div class="tags">
                 {% for tag in tags %}
-                    <a href="{{ url_for('tag', tag_name=tag.name) }}" class="tag-item">
-                        <span class="tag-name">#{{ tag.name }}</span>
-                        <span class="tag-count">{{ tag_counts[tag.name] }}</span>
-                    </a>
+                    <a href="{{ url_for('tag', tag_name=tag.name) }}" class="tag">#{{ tag.name }}</a>
                 {% endfor %}
             </div>
         {% else %}
-            <p class="empty-state">Aucun tag n'a encore été créé.</p>
+            <p class="empty-state">Aucun tag disponible</p>
         {% endif %}
     </div>
 </div>
 
 <style>
+    :root {
+        --color-text: #2c3e50;
+        --color-background: #faf8f5;
+        --color-surface: #ffffff;
+        --color-accent: #8b7355;
+        --color-accent-light: #a69076;
+        --font-serif: Georgia, 'Times New Roman', serif;
+        --font-sans: -apple-system, system-ui, sans-serif;
+        --spacing: 2rem;
+        --color-lighter: #ffffff;
+    }
+
     .container {
         max-width: 1200px;
         margin: 2rem auto;
@@ -57,64 +66,61 @@
         text-align: center;
     }
 
-    .site-header h1 {
+    .elegant-title {
         font-family: var(--font-serif);
         font-size: 3rem;
-        color: var(--color-ink);
+        color: var(--color-text);
         font-weight: 400;
         margin: 0;
     }
 
-    .tags-cloud {
+    .main-nav {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .nav-link {
+        color: var(--color-accent);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--font-serif);
+        transition: color 0.2s ease;
+    }
+
+    .nav-link:hover {
+        color: var(--color-accent-light);
+    }
+
+    .content {
+        margin-top: 2rem;
+    }
+
+    .tags {
         display: flex;
         flex-wrap: wrap;
         gap: 1rem;
         justify-content: center;
-        padding: 2rem;
+        margin-top: 1rem;
     }
 
-    .tag-item {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem 1rem;
-        background: var(--color-lighter);
-        border: 1px solid var(--color-accent);
-        border-radius: 2rem;
-        color: var(--color-accent);
+    .tag {
+        display: inline-block;
+        padding: 0.25rem 0.5rem;
+        margin: 0 0.5rem 0.5rem 0;
+        background: var(--color-accent);
+        color: var(--color-lighter);
+        border-radius: 4px;
         text-decoration: none;
-        font-size: 1rem;
-        transition: all 0.2s ease;
+        font-size: 0.9rem;
+        transition: opacity 0.2s;
     }
 
-    .tag-item:hover {
-        background: var(--color-accent);
-        color: var(--color-lighter);
-        transform: translateY(-2px);
-    }
-
-    .tag-name {
-        font-family: var(--font-serif);
-        font-style: italic;
-    }
-
-    .tag-count {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-width: 1.5rem;
-        height: 1.5rem;
-        padding: 0 0.5rem;
-        background: var(--color-accent);
-        color: var(--color-lighter);
-        border-radius: 1rem;
-        font-size: 0.8rem;
-        font-family: var(--font-text);
-    }
-
-    .tag-item:hover .tag-count {
-        background: var(--color-lighter);
-        color: var(--color-accent);
+    .tag:hover {
+        opacity: 0.9;
     }
 
     .empty-state {
