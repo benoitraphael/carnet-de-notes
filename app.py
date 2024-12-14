@@ -11,10 +11,12 @@ import markdown
 from markupsafe import Markup
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'dev-key-12345'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./blog.db'
+app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY', 'dev-key-12345')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///./blog.db')
+if app.config['SQLALCHEMY_DATABASE_URI'].startswith('postgres://'):
+    app.config['SQLALCHEMY_DATABASE_URI'] = app.config['SQLALCHEMY_DATABASE_URI'].replace('postgres://', 'postgresql://', 1)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['DEBUG'] = True
+app.config['DEBUG'] = os.environ.get('FLASK_ENV') != 'production'
 app.config['WTF_CSRF_ENABLED'] = True
 app.config['WTF_CSRF_TIME_LIMIT'] = None
 
