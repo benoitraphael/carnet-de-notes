@@ -1,6 +1,6 @@
 # Blog Minimaliste
 
-Un blog personnel minimaliste avec interface d'administration, développé avec Flask.
+Une plateforne de blogs minimaliste avec interface d'administration, développé avec Flask.
 
 ## Caractéristiques
 
